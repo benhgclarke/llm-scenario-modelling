@@ -208,17 +208,6 @@ def show_strategic_dashboard() -> None:
         cost_status = "🟢 Healthy" if cost < 30000 else "🟡 Caution" if cost < 40000 else "🔴 Critical"
         risk_status = "🟢 Low" if risk_score < 2 else "🟡 Medium" if risk_score < 3.5 else "🔴 High"
         
-        # Overall system health
-        overall_health_color = "green" if (revenue > 40000 and cost < 30000 and risk_score < 2) else "orange" if (revenue > 30000 and cost < 40000 and risk_score < 3.5) else "red"
-        
-        st.markdown("---")
-        st.markdown("## 📊 System Health Status")
-        
-        health_col1, health_col2 = st.columns([2, 1])
-        with health_col1:
-            health_text = "✓ All Systems Operating Normally" if overall_health_color == "green" else "⚠ Attention Required" if overall_health_color == "orange" else "✗ Critical Issues"
-            st.markdown(f"### {health_text}")
-        
         st.markdown("---")
         st.markdown("## 💰 Financial Performance")
         
