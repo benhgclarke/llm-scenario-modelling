@@ -188,9 +188,9 @@ def show_strategic_dashboard() -> None:
     3. **Risk Indicators**: Early warning signs that something needs attention
     
     **How to Use It:**
-    - **Quick Health Check**: Glance at the KPIs to see if everything is normal
-    - **Spot Trends**: Compare performance across facilities to identify leaders and laggards
-    - **Deep Dive**: Get AI-powered insights that explain what's driving the numbers
+    - **Quick Health Check**: Glance at the system health status to see if everything is normal
+    - **Spot Trends**: Review financial metrics and operational data to identify leaders and laggards
+    - **Compare Facilities**: Use the facility performance chart to see which plants are performing best
     
     **Why This Matters:** Instead of waiting for monthly reports, you get real-time visibility into business performance. 
     This lets you respond quickly to problems and capitalise on opportunities.
@@ -251,22 +251,36 @@ def show_strategic_dashboard() -> None:
             )
 
         st.markdown("---")
-        st.markdown("## 🏭 Facility Performance")
+        st.markdown("## 🏭 Operational Metrics - Facility Performance")
         
         df_dashboard = generate.generate_dashboard_data()
+        
+        # Identify leaders and laggards
+        if not df_dashboard.empty:
+            best_facility = df_dashboard.loc[df_dashboard['value'].idxmax()]
+            worst_facility = df_dashboard.loc[df_dashboard['value'].idxmin()]
+            
+            # Show leaders and laggards
+            insight_col1, insight_col2 = st.columns(2)
+            with insight_col1:
+                st.success(f"🏆 **Top Performer:** {best_facility['facility']} (£{best_facility['value']:,.0f})")
+            with insight_col2:
+                st.warning(f"⚠️ **Needs Support:** {worst_facility['facility']} (£{worst_facility['value']:,.0f})")
+        
+        # Create facility performance chart
         fig = px.bar(
             df_dashboard, 
             x="facility", 
             y="value", 
             color="value",
             color_continuous_scale=[[0, "#4A90E2"], [1, "#003D99"]],
-            title="Revenue by Facility",
+            title="Revenue Contribution by Plant",
             labels={"value": "Revenue (£)", "facility": "Location"},
         )
         fig.update_layout(showlegend=False, hovermode="x unified")
         st.plotly_chart(fig, use_container_width=True)
         
-        st.caption("🏭 This shows which plants contribute most to overall revenue. Use this to identify top performers and areas needing support.")
+        st.caption("Compare revenue across all plants. Darker blue indicates higher performers. Use this to spot trends and identify which facilities are leading and which need operational support.")
     except Exception as e:
         st.error(f"Error generating dashboard: {e}")
 
