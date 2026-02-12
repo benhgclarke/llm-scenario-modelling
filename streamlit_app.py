@@ -127,16 +127,21 @@ def show_insight_extraction() -> None:
 
     st.markdown("""
     ### What This Does
-    This section analyzes operational data across multiple dimensions to surface key insights. 
-    We examine 10 different KPIs across 3 manufacturing plants using 6 different analysis approaches:
-
-    **6 Analysis Types:**
-    1. **Trends**: How are KPIs moving over time?
-    2. **Anomalies**: Are there unusual spikes or dips?
-    3. **Correlations**: Which KPIs move together?
-    4. **Facility Comparison**: Which plant performs best?
-    5. **Risk Analysis**: Where are the biggest operational risks?
-    6. **Executive Summary**: AI-generated insights in plain English
+    
+    Once you have the data, the next question is: **What does it mean?** This section automatically analyzes your operational 
+    performance and highlights what's working well and what needs attention.
+    
+    **How It Analyzes Your Data:**
+    - **Performance Heatmap**: See at a glance which facilities and departments are performing best and worst
+    - **Radar Chart**: Compare your facility's performance across key operational areas
+    - **Trend Analysis**: Understand if performance is improving, declining, or staying stable
+    - **Anomaly Detection**: Get alerted to unusual spikes or drops that might indicate problems
+    - **Correlations**: Discover which metrics move together (e.g., does equipment uptime affect production?)
+    
+    **Why This Matters:** By automatically surfacing insights, you can:
+    - Quickly identify your top and bottom performers
+    - Spot problems before they become serious
+    - Understand which improvements will have the biggest impact
     """)
 
     try:
@@ -146,10 +151,10 @@ def show_insight_extraction() -> None:
             heatmap_data,
             text_auto=True,
             aspect="auto",
-            color_continuous_scale="Viridis",
+            color_continuous_scale="Greens",
         )
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("🔥 Heatmap shows performance scores (0-100) across facilities and key metrics. Darker = better performance.")
+        st.caption("� Green indicates strong performance, white shows weaker areas. Use this to identify which departments need support.")
 
         st.subheader("Performance Radar Chart")
         radar_data = processing.generate_radar_data()
@@ -157,7 +162,7 @@ def show_insight_extraction() -> None:
             radar_data, r="value", theta="metric", line_close=True
         )
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("📊 Radar chart compares your facility across 5 operational dimensions. Larger area = better overall performance.")
+        st.caption("⭐ The shape of this chart shows where you excel and where to focus improvement efforts. A balanced pentagon = well-rounded performance.")
     except Exception as e:
         st.error(f"Error generating insight data: {e}")
 
