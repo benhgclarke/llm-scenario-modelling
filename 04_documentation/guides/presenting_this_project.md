@@ -19,7 +19,7 @@ This project is structured around four independent deliverables that work togeth
 Each deliverable is self-contained with its own notebooks, source code, and data directories. Shared utilities eliminate duplication while keeping concerns separated. This makes the system modular, testable, and extensible. Notebooks serve as living documentation that actually executes, showing both methodology and results in one place.
 
 **Technology Stack:**
-- Python 3.x with pandas, NumPy for data manipulation
+- Python 3.13 with pandas, NumPy for data manipulation
 - Plotly Express for interactive visualisation
 - Monte Carlo simulation for uncertainty quantification
 - Claude API (Anthropic) for AI-powered insights
