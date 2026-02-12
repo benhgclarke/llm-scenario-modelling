@@ -286,7 +286,7 @@ def show_strategic_dashboard() -> None:
             x=financial_df["Month"],
             y=financial_df["Operating Cost"],
             name="Operating Cost",
-            marker_color="#ff7f0e",
+            marker_color="#cc5500",
             opacity=0.7
         ))
         
@@ -295,7 +295,7 @@ def show_strategic_dashboard() -> None:
             x=financial_df["Month"],
             y=financial_df["Profit"],
             name="Profit",
-            line=dict(color="#2ca02c", width=3),
+            line=dict(color="#00d960", width=3),
             yaxis="y2",
             mode="lines+markers",
             marker=dict(size=6)
