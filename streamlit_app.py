@@ -201,14 +201,14 @@ def show_strategic_dashboard() -> None:
         revenue = kpi_values['revenue']
         cost = kpi_values['cost']
         risk_score = kpi_values['risk_score']
-        max_risk_score = 8  # Risk score ranges from 2.0 to 8.0 in data
+        max_risk_score = 10  # Risk score on 1-10 business scale
         
-        # Determine status colours based on thresholds
-        # Revenue: £500k-£1m range; flag if < £600k
-        # Cost: £300k-£500k range; flag if > £420k 
-        # Risk: 2.0-8.0 scale; flag if > 6.0
-        revenue_status = "🟢 Healthy" if revenue > 700000 else "🟡 Caution" if revenue > 600000 else "🔴 Critical"
-        cost_status = "🟢 Healthy" if cost < 380000 else "🟡 Caution" if cost < 420000 else "🔴 Critical"
+        # Determine status colours based on realistic business thresholds
+        # Revenue: Healthy (>£80k), Caution (£60-80k), Critical (<£60k)
+        # Cost: Healthy (<£40k), Caution (£40-50k), Critical (>£50k)
+        # Risk: Low (<4), Medium (4-6), High (>6) on 1-10 scale
+        revenue_status = "🟢 Healthy" if revenue > 80000 else "🟡 Caution" if revenue > 60000 else "🔴 Critical"
+        cost_status = "🟢 Healthy" if cost < 40000 else "🟡 Caution" if cost < 50000 else "🔴 Critical"
         risk_status = "🟢 Low" if risk_score < 4 else "🟡 Medium" if risk_score < 6 else "🔴 High"
         
         st.markdown("---")
@@ -247,22 +247,22 @@ def show_strategic_dashboard() -> None:
         
         recommendations = []
         
-        # Thresholds based on data ranges:
-        # Revenue: flag if below £600k (lower third of £500k-£1m range)
-        # Cost: flag if above £420k (upper third of £300k-£500k range)  
-        # Risk Score: flag if above 6.0 (upper range of 2.0-8.0 scale)
+        # Thresholds based on realistic business benchmarks (not synthetic data ranges):
+        # Revenue: Healthy if monthly revenue > £80k, concerning if < £60k
+        # Operating Cost: Healthy if < £40k/month, concerning if > £50k
+        # Risk Score: On 1-10 scale; flag if > 6 (elevated risk)
         
-        if cost > 420000:
-            recommendations.append(f"**Cost Optimisation:** Operating costs are elevated at £{cost:,.0f} (threshold: £420,000). Consider reviewing procurement processes or renegotiating supplier contracts to reduce expenses.")
+        if cost > 50000:
+            recommendations.append(f"**Cost Optimisation:** Operating costs are elevated at £{cost:,.0f} (business threshold: £50,000). Consider reviewing procurement processes or renegotiating supplier contracts to reduce expenses.")
         
-        if revenue < 600000:
-            recommendations.append(f"**Revenue Growth:** Total revenue is below target at £{revenue:,.0f} (threshold: £600,000). Explore new market opportunities or consider expanding product/service offerings to increase revenue streams.")
+        if revenue < 60000:
+            recommendations.append(f"**Revenue Growth:** Total revenue is below business target at £{revenue:,.0f} (business threshold: £60,000). Explore new market opportunities or consider expanding product/service offerings to increase revenue streams.")
         
         if risk_score >= 6.0:
-            recommendations.append(f"**Risk Mitigation:** Operational risk is elevated at {risk_score:.1f}/8.0 (threshold: 6.0). Implement additional quality control measures and review critical process dependencies.")
+            recommendations.append(f"**Risk Mitigation:** Operational risk is elevated at {risk_score:.1f}/10 (business threshold: 6.0). Implement additional quality control measures and review critical process dependencies.")
         
         if not recommendations:
-            recommendations.append(f"**Operations Status:** Current metrics are healthy. Revenue: £{revenue:,.0f}, Operating Cost: £{cost:,.0f}, Risk Score: {risk_score:.1f}/8.0. Focus on maintaining performance and exploring growth opportunities.")
+            recommendations.append(f"**Operations Status:** Current metrics are healthy. Revenue: £{revenue:,.0f}, Operating Cost: £{cost:,.0f}, Risk Score: {risk_score:.1f}/10. Focus on maintaining performance and exploring growth opportunities.")
         
         for rec in recommendations:
             st.info(rec)
