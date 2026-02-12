@@ -66,4 +66,54 @@ elif deliverable == "Deliverable 2":
 # Deliverable 3: Strategic Dashboard
 # -----------------------
 elif deliverable == "Deliverable 3":
-    st.title("Deliverable 3: Str
+    st.title("Deliverable 3: Strategic Dashboard")
+
+    st.markdown("""
+    Full Plotly dashboard with tabbed interface, KPI cards, filtering  
+    On-demand Claude API insights panel
+    """)
+
+    # KPI cards
+    kpi_values = processing.generate_kpis()
+    col1, col2, col3 = st.columns(3)
+    col1.metric("Revenue", f"${kpi_values['revenue']:,}")
+    col2.metric("Cost", f"${kpi_values['cost']:,}")
+    col3.metric("Risk Score", f"{kpi_values['risk_score']:.2f}")
+
+    # Interactive dashboard component
+    df_dashboard = data_generator.generate_dashboard_data()
+    fig = px.bar(df_dashboard, x="facility", y="value", color="scenario")
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Claude API insights
+    if st.button("Get AI Insights"):
+        insights = llm_client.get_insights(df_dashboard)
+        st.write(insights)
+
+# -----------------------
+# Deliverable 4: Documentation
+# -----------------------
+elif deliverable == "Deliverable 4":
+    st.title("Deliverable 4: Documentation")
+
+    st.markdown("""
+    System & AI architecture docs  
+    Quick start guide  
+    Interview presentation guide  
+    Extension/training guide
+    """)
+
+    # Display markdown documentation
+    doc_path = "04_documentation/guides/presenting_this_project.md"
+    try:
+        with open(doc_path, "r", encoding="utf-8") as f:
+            md_content = f.read()
+        st.markdown(md_content)
+    except FileNotFoundError:
+        st.warning(f"Documentation file not found at {doc_path}")
+
+# -----------------------
+# Footer
+# -----------------------
+st.markdown("---")
+st.markdown("LLM Scenario Modelling — Streamlit Version")
