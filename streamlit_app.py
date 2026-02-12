@@ -266,7 +266,7 @@ def show_strategic_dashboard() -> None:
             color="Year",
             title="24-Month Operating Cost Trend",
             labels={"Operating Cost": "Cost (£)", "Month": "Date"},
-            marker="circle"
+            markers="circle"
         )
         fig.update_layout(hovermode="x unified")
         st.plotly_chart(fig, use_container_width=True)
