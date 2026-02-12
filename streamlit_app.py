@@ -342,7 +342,7 @@ def show_strategic_dashboard() -> None:
             color="Revenue",
             color_continuous_scale="Blues"
         )
-        fig_tree.data[0].hovertemplate = "<b>%{label}</b><br>Revenue: £%{value:,.0f}<extra></extra>"
+        fig_tree.update_layout(coloraxis_colorbar=dict(title="Revenue (£)"))
         st.plotly_chart(fig_tree, use_container_width=True)
         st.caption("Current month revenue distribution across business segments.")
         
