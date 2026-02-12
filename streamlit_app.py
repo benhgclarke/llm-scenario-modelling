@@ -321,28 +321,26 @@ def show_strategic_dashboard() -> None:
         current_revenue = financial_df["Revenue"].iloc[-1]  # Latest month revenue
         
         # Create revenue breakdown by segment
-        segments = {
-            "Product A": current_revenue * 0.35,
-            "Product B": current_revenue * 0.28,
-            "Product C": current_revenue * 0.22,
-            "Services": current_revenue * 0.15
-        }
-        
-        tree_df = pd.DataFrame([
-            {"Segment": name, "Revenue": value}
-            for name, value in segments.items()
-        ])
+        segment_labels = ["Product A", "Product B", "Product C", "Services"]
+        segment_values = [
+            current_revenue * 0.35,
+            current_revenue * 0.28,
+            current_revenue * 0.22,
+            current_revenue * 0.15
+        ]
         
         st.subheader("Current Revenue Distribution")
-        fig_tree = px.treemap(
-            tree_df,
-            labels="Segment",
-            values="Revenue",
+        fig_tree = go.Figure(go.Treemap(
+            labels=segment_labels,
+            parents=[""] * 4,
+            values=segment_values,
+            marker=dict(colorscale="Blues"),
+            textposition="middle center"
+        ))
+        fig_tree.update_layout(
             title="Revenue by Business Segment",
-            color="Revenue",
-            color_continuous_scale="Blues"
+            height=400
         )
-        fig_tree.update_layout(coloraxis_colorbar=dict(title="Revenue (£)"))
         st.plotly_chart(fig_tree, use_container_width=True)
         st.caption("Current month revenue distribution across business segments.")
         
