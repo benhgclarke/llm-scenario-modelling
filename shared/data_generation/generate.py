@@ -81,6 +81,51 @@ def save_data(df: pd.DataFrame, output_dir: str) -> str:
     return str(path)
 
 
+def generate_scenarios(n_paths: int = 200, n_months: int = 12, n_scenarios: int = 4) -> pd.DataFrame:
+    """Generate scenario data for Monte Carlo simulation."""
+    rng = np.random.default_rng(42)
+    dates = pd.date_range(end=pd.Timestamp.now().normalize(), periods=n_months, freq="MS")
+    
+    data = []
+    for scenario in range(n_scenarios):
+        for path in range(n_paths):
+            base_value = 1000 + scenario * 100
+            for i, date in enumerate(dates):
+                trend = i * 5
+                noise = rng.normal(0, 50)
+                value = base_value + trend + noise
+                data.append({
+                    "date": date,
+                    "scenario": f"Scenario {scenario + 1}",
+                    "path": path,
+                    "value": round(value, 2)
+                })
+    
+    return pd.DataFrame(data)
+
+
+def generate_dashboard_data() -> pd.DataFrame:
+    """Generate dashboard summary data by facility and scenario."""
+    df = generate_operational_metrics()
+    
+    # Create a simplified view: facility, scenario, and aggregated value
+    rng = np.random.default_rng(42)
+    facilities = df["facility"].unique()
+    scenarios = ["Base", "Conservative", "Optimistic"]
+    
+    data = []
+    for facility in facilities:
+        for scenario in scenarios:
+            value = rng.integers(800, 1200)
+            data.append({
+                "facility": facility,
+                "scenario": scenario,
+                "value": value
+            })
+    
+    return pd.DataFrame(data)
+
+
 if __name__ == "__main__":
     df = generate_operational_metrics()
     path = save_data(df, str(SETTINGS.get("_output", "shared/data_generation")))

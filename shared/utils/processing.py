@@ -68,3 +68,28 @@ def run_full_processing(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
         "anomalies": detect_anomalies(df),
         "correlations": compute_correlations(df),
     }
+
+
+def generate_heatmap_data() -> np.ndarray:
+    """Generate sample heatmap data for visualization."""
+    facilities = ["Plant Alpha", "Plant Beta", "Plant Gamma"]
+    metrics = ["Production", "Quality", "Efficiency", "Cost"]
+    rng = np.random.default_rng(42)
+    return rng.integers(70, 100, size=(len(facilities), len(metrics)))
+
+
+def generate_radar_data() -> pd.DataFrame:
+    """Generate sample radar chart data."""
+    metrics = ["Production", "Quality", "Efficiency", "Cost Control", "Safety"]
+    values = [85, 90, 78, 88, 95]
+    return pd.DataFrame({"metric": metrics, "value": values})
+
+
+def generate_kpis() -> dict[str, int | float]:
+    """Generate sample KPI values."""
+    rng = np.random.default_rng(42)
+    return {
+        "revenue": rng.integers(500000, 1000000),
+        "cost": rng.integers(300000, 500000),
+        "risk_score": round(rng.uniform(2.0, 8.0), 2),
+    }

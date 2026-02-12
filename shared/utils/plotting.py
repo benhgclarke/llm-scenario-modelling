@@ -39,3 +39,33 @@ def save_figure(fig: go.Figure, path: str, width: int = 1000, height: int = 500)
         fig.write_image(f"{path}.png", width=width, height=height, scale=2)
     except Exception:
         pass  # kaleido may not be available; HTML is the primary output
+
+
+def fan_chart(df) -> go.Figure:
+    """Create a fan chart showing scenario paths with uncertainty bands."""
+    import pandas as pd
+    
+    fig = go.Figure()
+    
+    # Extract unique scenarios and paths
+    if "scenario" in df.columns:
+        for scenario in df["scenario"].unique():
+            scenario_data = df[df["scenario"] == scenario]
+            color = SCENARIO_COLORS.get(scenario.lower(), "#636EFA")
+            
+            for path in scenario_data["path"].unique() if "path" in scenario_data.columns else [0]:
+                path_data = scenario_data[scenario_data["path"] == path] if "path" in scenario_data.columns else scenario_data
+                path_data = path_data.sort_values("date") if "date" in path_data.columns else path_data
+                
+                fig.add_trace(go.Scatter(
+                    x=path_data.get("date", list(range(len(path_data)))),
+                    y=path_data["value"],
+                    mode="lines",
+                    name=scenario,
+                    line=dict(color=color, width=1),
+                    opacity=0.3,
+                    legendgroup=scenario,
+                    hoverinfo="skip",
+                ))
+    
+    return apply_portfolio_style(fig, "Scenario Fan Chart")

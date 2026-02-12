@@ -43,3 +43,14 @@ def query_claude(prompt: str, context: str = "", system: str = SYSTEM_PROMPT) ->
         messages=[{"role": "user", "content": user_message}],
     )
     return response.content[0].text
+
+
+def get_insights(df) -> str:
+    """Generate AI insights from a DataFrame."""
+    try:
+        # Convert dataframe to context string
+        context = df.head(10).to_string()
+        prompt = "Please analyze this operational data and provide key insights."
+        return query_claude(prompt, context)
+    except Exception as e:
+        return f"Unable to generate insights: {str(e)}"
