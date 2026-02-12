@@ -340,8 +340,7 @@ def show_strategic_dashboard() -> None:
             values="Revenue",
             title="Revenue by Business Segment",
             color="Revenue",
-            color_continuous_scale="Blues",
-            hover_data={"Revenue": ":.0f"}
+            color_continuous_scale="Blues"
         )
         fig_tree.data[0].hovertemplate = "<b>%{label}</b><br>Revenue: £%{value:,.0f}<extra></extra>"
         st.plotly_chart(fig_tree, use_container_width=True)
