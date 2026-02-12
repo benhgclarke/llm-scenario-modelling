@@ -251,21 +251,24 @@ def show_strategic_dashboard() -> None:
             )
 
         st.markdown("---")
-        st.markdown("## 🚨 Critical Issues")
+        st.markdown("## � LLM Recommendations")
         
-        issues = []
-        if risk_score >= 3.5:
-            issues.append("🔴 High operational risk detected")
-        if revenue < 30000:
-            issues.append("🔴 Revenue below target threshold")
-        if cost > 40000:
-            issues.append("🔴 Operating costs exceeded limit")
+        recommendations = []
         
-        if issues:
-            for issue in issues:
-                st.error(issue)
-        else:
-            st.info("✓ No critical issues detected. Operations nominal.")
+        if cost > 35000:
+            recommendations.append("**Cost Optimisation:** Operating costs are elevated. Consider reviewing procurement processes or renegotiating supplier contracts to reduce expenses.")
+        
+        if revenue < 35000:
+            recommendations.append("**Revenue Growth:** Total revenue is below target. Explore new market opportunities or consider expanding product/service offerings to increase revenue streams.")
+        
+        if risk_score >= 3:
+            recommendations.append("**Risk Mitigation:** Operational risk is moderate to high. Implement additional quality control measures and review critical process dependencies.")
+        
+        if not recommendations:
+            recommendations.append("**Operations Status:** Current metrics are healthy. Focus on maintaining performance and exploring growth opportunities.")
+        
+        for rec in recommendations:
+            st.info(rec)
 
         st.markdown("---")
         st.markdown("## 🏭 Operational Metrics - Facility Performance")
