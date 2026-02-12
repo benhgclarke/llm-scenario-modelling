@@ -230,7 +230,7 @@ def main() -> None:
     """)
     st.sidebar.markdown("---")
     
-    deliverable = st.radio(
+    deliverable = st.sidebar.radio(
         "Select Deliverable",
         list(DELIVERABLES.keys()),
     )
