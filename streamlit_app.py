@@ -21,7 +21,7 @@ DELIVERABLES = {
     },
     "Deliverable 2": {
         "title": "Insight Extraction",
-        "description": "Analysis types: trends, anomalies, correlations, facility comparison, risk, executive summary\nStructured prompt engineering for consistent AI output\nHeatmaps, radar charts, anomaly timelines",
+        "description": "",
     },
     "Deliverable 3": {
         "title": "Strategic Dashboard",
