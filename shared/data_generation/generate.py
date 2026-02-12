@@ -103,6 +103,35 @@ def generate_scenarios(n_paths: int = 200, n_months: int = 12, n_scenarios: int 
     return df
 
 
+def generate_uncertainty_bounds(n_months: int = 12, n_scenarios: int = 4) -> pd.DataFrame:
+    """Generate uncertainty bounds (min/max ranges) for each scenario."""
+    rng = np.random.default_rng(42)
+    dates = pd.date_range(end=pd.Timestamp.now().normalize(), periods=n_months, freq="MS")
+    
+    data_upper = {}
+    data_lower = {}
+    
+    for scenario in range(n_scenarios):
+        base_value = 1000 + scenario * 100
+        upper = []
+        lower = []
+        for i in range(n_months):
+            trend = i * 5
+            # Upper bound: mean + 2 std devs
+            upper_val = base_value + trend + 100
+            # Lower bound: mean - 2 std devs
+            lower_val = base_value + trend - 100
+            upper.append(round(upper_val, 2))
+            lower.append(round(lower_val, 2))
+        
+        data_upper[f"Scenario {scenario + 1}_upper"] = upper
+        data_lower[f"Scenario {scenario + 1}_lower"] = lower
+    
+    df_bounds = pd.DataFrame({**data_lower, **data_upper}, index=dates)
+    df_bounds.index.name = "date"
+    return df_bounds
+
+
 def generate_dashboard_data() -> pd.DataFrame:
     """Generate dashboard summary data by facility and scenario."""
     df = generate_operational_metrics()

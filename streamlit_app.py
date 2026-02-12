@@ -94,9 +94,13 @@ def show_scenario_modeling() -> None:
         st.line_chart(scenario_df)
         st.caption("📈 Each line represents the average trajectory for each scenario over 12 months.")
 
-        fig = plotting.fan_chart(scenario_df)
+        bounds_df = generate.generate_uncertainty_bounds(
+            n_months=SIMULATOR_CONFIG["n_months"],
+            n_scenarios=SIMULATOR_CONFIG["n_scenarios"],
+        )
+        fig = plotting.fan_chart(bounds_df)
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("📊 **Uncertainty Bands**: This view shows the same scenarios with thicker bands to represent the uncertainty and range in possible outcomes. Wider gaps between scenarios = greater divergence in outcomes.")
+        st.caption("🎯 **Uncertainty Ranges**: The shaded areas show the realistic range of outcomes for each scenario. The wider the area, the more uncertainty exists. Use this to understand best-case and worst-case outcomes.")
     except Exception as e:
         st.error(f"Error generating scenario data: {e}")
 

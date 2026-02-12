@@ -46,12 +46,13 @@ def save_figure(fig: go.Figure, path: str, width: int = 1000, height: int = 500)
 
 
 def fan_chart(df) -> go.Figure:
-    """Create an area chart showing scenario paths with filled uncertainty bands."""
+    """Create an area chart showing scenario uncertainty ranges (upper and lower bounds)."""
     import pandas as pd
     
     fig = go.Figure()
     
     # df should have scenarios as columns and dates as index
+    # Display upper bound as filled area
     if isinstance(df, pd.DataFrame) and len(df.columns) > 0:
         for scenario in df.columns:
             color = SCENARIO_COLORS.get(scenario.lower(), "#636EFA")
@@ -60,9 +61,29 @@ def fan_chart(df) -> go.Figure:
                 x=df.index,
                 y=df[scenario],
                 mode="lines",
-                name=scenario,
-                line=dict(color=color, width=4),
-                opacity=0.7,
+                name=scenario.replace("_upper", "").replace("_lower", ""),
+                line=dict(color=color, width=1),
+                opacity=0,
+                hoverinfo="skip",
             ))
     
-    return apply_portfolio_style(fig, "Scenario Forecast - Uncertainty Bands")
+    # Add filled areas for upper bounds
+    scenario_nums = set([col.replace("_upper", "").replace("_lower", "") for col in df.columns])
+    
+    for scenario in sorted(scenario_nums):
+        if f"{scenario}_upper" in df.columns:
+            color = SCENARIO_COLORS.get(scenario.lower(), "#636EFA")
+            
+            fig.add_trace(go.Scatter(
+                x=df.index.tolist() + df.index.tolist()[::-1],
+                y=df[f"{scenario}_upper"].tolist() + df[f"{scenario}_lower"].tolist()[::-1],
+                fill="toself",
+                fillcolor=color,
+                opacity=0.2,
+                line=dict(color="rgba(0,0,0,0)"),
+                name=f"{scenario} range",
+                hoverinfo="skip",
+                showlegend=False,
+            ))
+    
+    return apply_portfolio_style(fig, "Scenario Uncertainty Ranges")
