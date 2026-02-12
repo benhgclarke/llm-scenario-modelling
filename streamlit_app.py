@@ -151,7 +151,7 @@ def show_insight_extraction() -> None:
             heatmap_data,
             text_auto=True,
             aspect="auto",
-            color_continuous_scale="Greens",
+            color_continuous_scale=[[0, "#D9F0D0"], [1, "#064E0C"]],
         )
         st.plotly_chart(fig, use_container_width=True)
         st.caption("� Green indicates strong performance, white shows weaker areas. Use this to identify which departments need support.")
