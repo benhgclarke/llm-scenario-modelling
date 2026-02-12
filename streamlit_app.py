@@ -17,7 +17,7 @@ PAGE_CONFIG = {
 DELIVERABLES = {
     "Deliverable 1": {
         "title": "Scenario Modeling",
-        "description": "Monte Carlo simulation engine (200 paths × 4 scenarios × 12 months)\nAI-powered scenario interpretation via Claude API\nFan charts, uncertainty bands, resilience analysis",
+        "description": "",
     },
     "Deliverable 2": {
         "title": "Insight Extraction",
@@ -56,16 +56,32 @@ def show_scenario_modeling() -> None:
 
     st.markdown("""
     ### What This Does
-    This section uses **Monte Carlo simulation** to project key performance indicators (KPIs) 
-    into the future under different business scenarios. Instead of making a single prediction, 
-    we run 200 simulated paths for each scenario to capture uncertainty and show a range of 
-    possible outcomes.
+    
+    **The Challenge:** In business, the future is uncertain. Should you invest in new equipment? Will demand grow or shrink? 
+    Instead of guessing, we use data science to explore multiple possible futures.
 
-    **Scenarios modeled:**
-    - **Scenario 1 (Conservative)**: Assumes slower improvement
-    - **Scenario 2 (Baseline)**: Assumes steady-state operations
-    - **Scenario 3 (Optimistic)**: Assumes operational improvements
-    - **Scenario 4 (Aggressive)**: Assumes significant changes
+    **How It Works:**
+    This tool uses a technique called **scenario modeling** to show you different possible futures for your business. 
+    Think of it like a weather forecast that shows multiple possible outcomes (sunny, rainy, snowy) instead of just one prediction.
+    
+    **Three Key Concepts:**
+    
+    1. **Scenarios**: We model 4 different business conditions:
+       - **Scenario 1 (Conservative)**: Things improve slowly - cautious growth
+       - **Scenario 2 (Baseline)**: Business continues as normal - steady performance
+       - **Scenario 3 (Optimistic)**: Things improve noticeably - strong growth
+       - **Scenario 4 (Aggressive)**: Major changes happen - rapid transformation
+    
+    2. **Uncertainty Bands**: For each scenario, we run 200 different simulations (think of them as 200 different possible timelines). 
+       This shows us not just the "average" outcome, but the range of what could happen. Some timelines might do better, 
+       some worse - that's the uncertainty.
+    
+    3. **12-Month Horizon**: We project forward 12 months (one year) to see how each scenario plays out over time.
+
+    **Why This Matters:** By seeing multiple possible futures, you can:
+    - Prepare for different outcomes instead of being surprised
+    - Identify which scenarios matter most to your business
+    - Make better decisions about investments and strategy
     """)
 
     try:
