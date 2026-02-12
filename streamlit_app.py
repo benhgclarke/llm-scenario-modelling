@@ -140,7 +140,7 @@ def show_insight_extraction() -> None:
     """)
 
     try:
-        st.subheading("Performance Heatmap")
+        st.subheader("Performance Heatmap")
         heatmap_data = processing.generate_heatmap_data()
         fig = px.imshow(
             heatmap_data,
@@ -151,7 +151,7 @@ def show_insight_extraction() -> None:
         st.plotly_chart(fig, use_container_width=True)
         st.caption("🔥 Heatmap shows performance scores (0-100) across facilities and key metrics. Darker = better performance.")
 
-        st.subheading("Performance Radar Chart")
+        st.subheader("Performance Radar Chart")
         radar_data = processing.generate_radar_data()
         fig = px.line_polar(
             radar_data, r="value", theta="metric", line_close=True
@@ -176,7 +176,7 @@ def show_strategic_dashboard() -> None:
     """)
 
     try:
-        st.subheading("Key Performance Indicators")
+        st.subheader("Key Performance Indicators")
         kpi_values = processing.generate_kpis()
         col1, col2, col3 = st.columns(3)
         col1.metric("Revenue", f"${kpi_values['revenue']:,}")
@@ -184,7 +184,7 @@ def show_strategic_dashboard() -> None:
         col3.metric("Risk Score", f"{kpi_values['risk_score']:.2f}")
         st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health.")
 
-        st.subheading("Facility Comparison")
+        st.subheader("Facility Comparison")
         df_dashboard = generate.generate_dashboard_data()
         fig = px.bar(
             df_dashboard, x="facility", y="value", color="value",
