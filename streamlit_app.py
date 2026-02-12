@@ -110,9 +110,22 @@ def show_strategic_dashboard() -> None:
         )
         st.plotly_chart(fig, use_container_width=True)
 
+        st.markdown("---")
+        st.markdown("### AI Insights Panel")
         if st.button("Get AI Insights"):
-            insights = llm_client.get_insights(df_dashboard)
-            st.write(insights)
+            with st.spinner("Generating insights..."):
+                insights = llm_client.get_insights(df_dashboard)
+                if "Unable to generate insights" in insights:
+                    st.warning(
+                        "🔑 **API Key Required**\n\n"
+                        "To enable AI insights, add your Anthropic API key:\n\n"
+                        "1. Copy `.env.example` to `.env`\n"
+                        "2. Add your `ANTHROPIC_API_KEY`\n"
+                        "3. Restart the app"
+                    )
+                else:
+                    st.success("Insights Generated")
+                    st.write(insights)
     except Exception as e:
         st.error(f"Error generating dashboard: {e}")
 
