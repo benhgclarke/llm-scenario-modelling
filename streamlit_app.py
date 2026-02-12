@@ -107,7 +107,7 @@ def show_strategic_dashboard() -> None:
         df_dashboard = generate.generate_dashboard_data()
         fig = px.bar(
             df_dashboard, x="facility", y="value", color="value",
-            color_continuous_scale=[[0, "#E8F1F9"], [1, "#003D99"]],
+            color_continuous_scale=[[0, "#4A90E2"], [1, "#003D99"]],
             title="Revenue by Facility"
         )
         fig.update_layout(coloraxis_colorbar=dict(title="Value"))
