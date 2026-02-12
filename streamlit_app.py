@@ -269,33 +269,39 @@ def show_strategic_dashboard() -> None:
             "Profit": historical_profit
         })
         
+        # Create scaled data for display (in thousands)
+        financial_df_scaled = financial_df.copy()
+        financial_df_scaled["Revenue"] = financial_df_scaled["Revenue"] / 1000
+        financial_df_scaled["Operating Cost"] = financial_df_scaled["Operating Cost"] / 1000
+        financial_df_scaled["Profit"] = financial_df_scaled["Profit"] / 1000
+        
         st.subheader("24-Month Financial Overview")
         fig_combo = go.Figure()
         
-        # Add Revenue line
+        # Add Revenue line (scaled)
         fig_combo.add_trace(go.Scatter(
-            x=financial_df["Month"],
-            y=financial_df["Revenue"],
+            x=financial_df_scaled["Month"],
+            y=financial_df_scaled["Revenue"],
             name="Revenue",
             mode="lines",
             line=dict(color="#0d47a1", width=2),
             connectgaps=True
         ))
         
-        # Add Operating Cost line
+        # Add Operating Cost line (scaled)
         fig_combo.add_trace(go.Scatter(
-            x=financial_df["Month"],
-            y=financial_df["Operating Cost"],
+            x=financial_df_scaled["Month"],
+            y=financial_df_scaled["Operating Cost"],
             name="Operating Cost",
             mode="lines",
             line=dict(color="#ffb3b3", width=2),
             connectgaps=True
         ))
         
-        # Add Profit on same y-axis (will naturally appear below as it's a smaller value)
+        # Add Profit on same y-axis (scaled)
         fig_combo.add_trace(go.Scatter(
-            x=financial_df["Month"],
-            y=financial_df["Profit"],
+            x=financial_df_scaled["Month"],
+            y=financial_df_scaled["Profit"],
             name="Profit",
             mode="lines",
             line=dict(color="#00b050", width=3),
@@ -307,7 +313,8 @@ def show_strategic_dashboard() -> None:
             xaxis_title="Month",
             yaxis_title="Amount (£)",
             yaxis=dict(
-                ticktemplate="£%{value/1000:.1f}K"
+                tickformat="£.1f",
+                ticksuffix="K"
             ),
             hovermode="x unified",
             height=500
