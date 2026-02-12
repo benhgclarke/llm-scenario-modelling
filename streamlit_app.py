@@ -202,8 +202,10 @@ def show_strategic_dashboard() -> None:
         col1, col2, col3 = st.columns(3)
         col1.metric("Revenue", f"£{kpi_values['revenue']:,}")
         col2.metric("Cost", f"£{kpi_values['cost']:,}")
-        col3.metric("Risk Score", f"{kpi_values['risk_score']:.2f}")
-        st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health.")
+        risk_score = kpi_values['risk_score']
+        max_risk_score = 5  # Change if your scale is different
+        col3.metric("Risk Score", f"{risk_score:.2f}/{max_risk_score}")
+        st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health (out of 5).")
 
         st.subheader("Facility Comparison")
         df_dashboard = generate.generate_dashboard_data()
@@ -240,18 +242,18 @@ def show_strategic_dashboard() -> None:
 def show_documentation() -> None:
     """Display Documentation deliverable."""
     st.title("Deliverable 4: Documentation")
-    st.markdown(DELIVERABLES["Deliverable 4"]["description"])
-
     st.markdown("""
     ### What This Is
-    Complete documentation covering the entire system, including:
-    - **System Architecture**: How all components work together
-    - **AI Integration Guide**: How Claude API powers the insights
-    - **Quick Start Guide**: Getting up and running in 5 minutes
-    - **Presentation Guide**: How to present this project to stakeholders
-    - **Extension Guide**: How to build on top of this system
 
-    This section provides everything needed to understand, maintain, and scale the system.
+    This section provides complete documentation covering the entire system, including:
+
+    - **System Architecture:** Explains how all the components of the platform work together, from data generation to dashboard visualisation.
+    - **AI Integration Guide:** Details how the Claude API is used to power automated insights and how you can configure or extend this integration.
+    - **Quick Start Guide:** Step-by-step instructions to get the system up and running in just five minutes, suitable for both technical and non-technical users.
+    - **Presentation Guide:** Tips and resources for presenting this project to stakeholders, including suggested talking points and visual aids.
+    - **Extension Guide:** Guidance on how to build on top of this system, whether you want to add new data sources, analytics or visualisations.
+
+    This documentation provides everything needed to understand, maintain and scale the system effectively.
     """)
 
     try:
