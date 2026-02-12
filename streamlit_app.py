@@ -270,76 +270,6 @@ def show_strategic_dashboard() -> None:
         })
         
         st.subheader("24-Month Financial Overview")
-        fig = go.Figure()
-        
-        # Add Revenue bars
-        fig.add_trace(go.Bar(
-            x=financial_df["Month"],
-            y=financial_df["Revenue"],
-            name="Revenue",
-            marker_color="#7fa8c9",
-            opacity=0.5
-        ))
-        
-        # Add Operating Cost bars
-        fig.add_trace(go.Bar(
-            x=financial_df["Month"],
-            y=financial_df["Operating Cost"],
-            name="Operating Cost",
-            marker_color="#d4903a",
-            opacity=0.5
-        ))
-        
-        # Add Profit line on secondary y-axis
-        fig.add_trace(go.Scatter(
-            x=financial_df["Month"],
-            y=financial_df["Profit"],
-            name="Profit",
-            line=dict(color="#ff0000", width=4),
-            yaxis="y2",
-            mode="lines+markers",
-            marker=dict(size=8, color="#ff0000")
-        ))
-        
-        fig.update_layout(
-            title="Revenue, Operating Cost & Profit Trend",
-            xaxis_title="Month",
-            yaxis_title="Amount (£)",
-            yaxis2=dict(
-                title="Profit (£)",
-                overlaying="y",
-                side="right"
-            ),
-            hovermode="x unified",
-            barmode="group",
-            height=500
-        )
-        st.plotly_chart(fig, use_container_width=True)
-        st.caption("Monthly revenue and operating costs with profit overlay. Bars show revenue and cost; green line shows profit trend.")
-        
-        # ===== ALTERNATIVE VIEW 1: WATERFALL CHART =====
-        st.subheader("Alternative View 1: Waterfall Chart")
-        latest_month = financial_df.iloc[-1]
-        fig_waterfall = go.Figure(go.Waterfall(
-            x=["Revenue", "Operating Cost", "Profit"],
-            y=[latest_month["Revenue"], -latest_month["Operating Cost"], latest_month["Profit"]],
-            measure=["relative", "relative", "total"],
-            connector={"line": {"color": "gray"}},
-            increasing={"marker": {"color": "#7fa8c9"}},
-            decreasing={"marker": {"color": "#d4903a"}},
-            totals={"marker": {"color": "#ff0000"}}
-        ))
-        fig_waterfall.update_layout(
-            title="Current Month: Revenue to Profit Waterfall",
-            xaxis_title="",
-            yaxis_title="Amount (£)",
-            height=400
-        )
-        st.plotly_chart(fig_waterfall, use_container_width=True)
-        st.caption("Shows how operating costs reduce revenue to arrive at profit for the current month.")
-        
-        # ===== ALTERNATIVE VIEW 4: COMBINATION CHART (Lines + Area) =====
-        st.subheader("Alternative View 4: Combination Chart")
         fig_combo = go.Figure()
         
         # Add Revenue line
@@ -362,27 +292,31 @@ def show_strategic_dashboard() -> None:
             connectgaps=True
         ))
         
-        # Add Profit as filled area
+        # Add Profit on secondary y-axis
         fig_combo.add_trace(go.Scatter(
             x=financial_df["Month"],
             y=financial_df["Profit"],
             name="Profit",
             mode="lines",
             line=dict(color="#ff0000", width=3),
-            fill="tozeroy",
-            fillcolor="rgba(255, 0, 0, 0.2)",
+            yaxis="y2",
             connectgaps=True
         ))
         
         fig_combo.update_layout(
-            title="Revenue, Cost & Profit Trend (Lines with Profit Fill)",
+            title="Revenue, Cost & Profit Trend",
             xaxis_title="Month",
-            yaxis_title="Amount (£)",
+            yaxis_title="Revenue & Cost (£)",
+            yaxis2=dict(
+                title="Profit (£)",
+                overlaying="y",
+                side="right"
+            ),
             hovermode="x unified",
             height=400
         )
         st.plotly_chart(fig_combo, use_container_width=True)
-        st.caption("Line chart showing all three metrics with profit highlighted as a filled area.")
+        st.caption("Line chart showing revenue and cost on the left axis, with profit on the right axis for clear separation.")
         
         # Revenue breakdown tree map
         current_revenue = financial_df["Revenue"].iloc[-1]  # Latest month revenue
