@@ -271,21 +271,20 @@ def show_strategic_dashboard() -> None:
         fig = px.bar(
             df_dashboard, 
             x="facility", 
-            y="value", 
-            color="value",
-            color_continuous_scale="Blues",
+            y="value",
             title="Revenue Contribution by Plant",
             labels={"value": "Revenue (£)", "facility": "Location"},
         )
+        fig.update_traces(marker=dict(color="#1f77b4", line=dict(width=0)))
         fig.update_layout(
             showlegend=False, 
             hovermode="x unified",
-            coloraxis_colorbar=dict(title="Revenue (£)")
+            yaxis_title="Revenue (£)",
+            xaxis_title="Plant"
         )
-        fig.update_traces(marker=dict(line=dict(width=0)))
         st.plotly_chart(fig, use_container_width=True)
         
-        st.caption("Compare revenue across all plants. Darker blue indicates higher performers. Use this to spot trends and identify which facilities are leading and which need operational support.")
+        st.caption("Compare revenue across all plants. Each plant has a single bar showing total revenue contribution. Use this to identify which facilities are leading and which need operational support.")
     except Exception as e:
         st.error(f"Error generating dashboard: {e}")
 
