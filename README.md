@@ -1,6 +1,6 @@
 # AI-Enhanced Data Analytics & Scenario Modeling
 
-An end-to-end AI-augmented analytics system for operational manufacturing data. Combines statistical analysis, Monte Carlo simulation, and Claude API-powered interpretation to deliver actionable strategic insights through Jupyter notebooks and an interactive dashboard.
+An end-to-end AI-augmented analytics system for operational manufacturing data. Combines statistical analysis, Monte Carlo simulation and Claude API-powered interpretation to deliver actionable strategic insights through Jupyter notebooks and an interactive dashboard.
 
 ## Quick Start
 

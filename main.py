@@ -2,7 +2,7 @@
 AI-Enhanced Data Analytics & Scenario Modeling
 ===============================================
 CLI entry point — generate data, run processing, model scenarios,
-extract AI insights, and launch the interactive dashboard.
+extract AI insights and launch the interactive dashboard.
 
 Usage:
     python main.py generate     Generate synthetic operational metrics

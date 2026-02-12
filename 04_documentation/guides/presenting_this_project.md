@@ -8,15 +8,15 @@ This project is structured around four independent deliverables that work togeth
 - **Deliverable 1: Scenario Modeling** (`01_scenario_modeling/`) — Generates multiple possible business futures using Monte Carlo simulation
 - **Deliverable 2: Insight Extraction** (`02_insight_extraction/`) — Analyses operational data and surfaces key performance trends
 - **Deliverable 3: Strategic Dashboard** (`03_strategic_dashboard/`) — Real-time view of business metrics and KPIs
-- **Deliverable 4: Documentation** (`04_documentation/`) — Complete guides, architecture docs, and presentation materials
+- **Deliverable 4: Documentation** (`04_documentation/`) — Complete guides, architecture docs and presentation materials
 
 **Shared Utilities** (`shared/`):
 - `data_generation/` — Synthetic data creation and scenario generation
-- `utils/` — Processing, plotting, and LLM client integration
+- `utils/` — Processing, plotting and LLM client integration
 - `config/` — Configuration management (YAML-based settings)
 
 **Why This Architecture?**
-Each deliverable is self-contained with its own notebooks, source code, and data directories. Shared utilities eliminate duplication while keeping concerns separated. This makes the system modular, testable, and extensible. Notebooks serve as living documentation that actually executes, showing both methodology and results in one place.
+Each deliverable is self-contained with its own notebooks, source code and data directories. Shared utilities eliminate duplication while keeping concerns separated. This makes the system modular, testable and extensible. Notebooks serve as living documentation that actually executes, showing both methodology and results in one place.
 
 **Technology Stack:**
 - Python 3.13 with pandas, NumPy for data manipulation
@@ -33,7 +33,7 @@ Each deliverable is self-contained with its own notebooks, source code, and data
 The Claude API enhances this system by translating quantitative analysis into business-friendly insights.
 
 **How It Works:**
-The AI integration is an optional enhancement layer. The system generates all charts, statistics, and scenarios without it. When enabled, Claude API processes the generated data and explains what it means in strategic business terms.
+The AI integration is an optional enhancement layer. The system generates all charts, statistics and scenarios without it. When enabled, Claude API processes the generated data and explains what it means in strategic business terms.
 
 **Configuration:**
 1. Create a `.env` file in the project root
@@ -105,7 +105,7 @@ To explore the methodology in detail, open the notebooks in each deliverable fol
 
 ## Presentation Guide
 
-Tips and talking points for presenting this project to stakeholders, investors, or interviewers.
+Tips and talking points for presenting this project to stakeholders, investors or interviewers.
 
 **Recommended Walkthrough (13 minutes total):**
 
@@ -190,7 +190,7 @@ How to build on top of this system and integrate new capabilities.
 1. Replace synthetic data with live data sources
 2. Secure your API keys (use environment variables, secrets managers)
 3. Set up logging and error monitoring
-4. Deploy Streamlit using Streamlit Cloud, Docker, or Kubernetes
+4. Deploy Streamlit using Streamlit Cloud, Docker or Kubernetes
 5. Configure scheduled jobs for data refresh and analysis updates
 
 **Scaling Tips:**
