@@ -278,7 +278,7 @@ def show_strategic_dashboard() -> None:
             y=financial_df["Revenue"],
             name="Revenue",
             mode="lines",
-            line=dict(color="#1f77b4", width=2),
+            line=dict(color="#0d47a1", width=2),
             connectgaps=True
         ))
         
@@ -288,7 +288,7 @@ def show_strategic_dashboard() -> None:
             y=financial_df["Operating Cost"],
             name="Operating Cost",
             mode="lines",
-            line=dict(color="#cc5500", width=2),
+            line=dict(color="#ffb3b3", width=2),
             connectgaps=True
         ))
         
@@ -298,7 +298,7 @@ def show_strategic_dashboard() -> None:
             y=financial_df["Profit"],
             name="Profit",
             mode="lines",
-            line=dict(color="#ff0000", width=3),
+            line=dict(color="#00b050", width=3),
             connectgaps=True
         ))
         
