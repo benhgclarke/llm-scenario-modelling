@@ -25,7 +25,7 @@ DELIVERABLES = {
     },
     "Deliverable 3": {
         "title": "Strategic Dashboard",
-        "description": "Full Plotly dashboard with tabbed interface, KPI cards, filtering\nOn-demand Claude API insights panel",
+        "description": "",
     },
     "Deliverable 4": {
         "title": "Documentation",
