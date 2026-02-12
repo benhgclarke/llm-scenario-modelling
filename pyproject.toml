@@ -2,7 +2,7 @@
 name = "ai-scenario-modeling"
 version = "1.0.0"
 description = "AI-Enhanced Data Analytics & Scenario Modeling — Portfolio Project"
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 dependencies = [
     "anthropic>=0.39.0",
     "pandas>=2.1.0",
@@ -30,4 +30,4 @@ include = ["shared*"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py313"

@@ -62,7 +62,7 @@ If no API key is provided, the app displays helpful setup instructions. All stat
 Get the system running in five minutes.
 
 **Prerequisites:**
-- Python 3.8+
+- Python 3.13+
 - pip or conda
 
 **Installation Steps:**

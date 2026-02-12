@@ -69,7 +69,7 @@ Raw Operational Data
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
-| Language | Python 3.10+ | Core runtime |
+| Language | Python 3.13+ | Core runtime |
 | Data | pandas, numpy | Processing and analysis |
 | AI/LLM | Anthropic Claude API | Insight generation |
 | Visualization | Plotly, Plotly Dash | Charts and dashboard |

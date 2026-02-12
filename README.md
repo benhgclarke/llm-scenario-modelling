@@ -96,7 +96,7 @@ jupyter notebook
 
 | Component | Technology |
 |-----------|-----------|
-| Language | Python 3.10+ |
+| Language | Python 3.13+ |
 | Data | pandas, numpy, scipy |
 | AI/LLM | Anthropic Claude API |
 | Visualization | Plotly, Plotly Dash |
