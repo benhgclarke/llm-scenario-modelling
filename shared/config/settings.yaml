@@ -1,0 +1,45 @@
+# ============================================================
+# AI-Enhanced Scenario Modeling — Project Configuration
+# ============================================================
+
+data:
+  categories:
+    - production_output
+    - quality_rate
+    - equipment_uptime
+    - labor_efficiency
+    - inventory_turnover
+    - order_fulfillment_rate
+    - cycle_time_hours
+    - defect_rate_ppm
+    - energy_cost_per_unit
+    - on_time_delivery_pct
+
+  sample:
+    num_months: 24
+    num_facilities: 3
+    facility_names:
+      - "Plant Alpha"
+      - "Plant Beta"
+      - "Plant Gamma"
+
+scenarios:
+  time_horizons: [3, 6, 12]
+  variation:
+    optimistic: 1.15
+    baseline: 1.0
+    pessimistic: 0.85
+    worst_case: 0.70
+  num_simulations: 200
+
+insights:
+  focus_areas:
+    - trend_analysis
+    - anomaly_detection
+    - cross_metric_correlation
+    - facility_comparison
+    - strategic_recommendations
+
+dashboard:
+  refresh_interval_seconds: 300
+  default_time_range_months: 12
