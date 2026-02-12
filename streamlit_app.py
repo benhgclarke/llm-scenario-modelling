@@ -52,6 +52,7 @@ st.set_page_config(**PAGE_CONFIG)
 def show_scenario_modeling() -> None:
     """Display Scenario Modeling deliverable."""
     st.title("Deliverable 1: Scenario Modeling")
+    st.markdown(DELIVERABLES["Deliverable 1"]["description"])
 
     st.markdown("""
     ### What This Does
@@ -74,36 +75,12 @@ def show_scenario_modeling() -> None:
             n_scenarios=SIMULATOR_CONFIG["n_scenarios"],
         )
         st.subheader("Scenario Projections")
-        
-        # Create a colored line chart using plotly with consistent colors
-        fig_line = go.Figure()
-        scenario_colors = {
-            "Scenario 1": "#636EFA",
-            "Scenario 2": "#0099FF",
-            "Scenario 3": "#00CC96",
-            "Scenario 4": "#FF6B35",
-        }
-        for scenario in scenario_df.columns:
-            fig_line.add_trace(go.Scatter(
-                x=scenario_df.index,
-                y=scenario_df[scenario],
-                mode="lines",
-                name=scenario,
-                line=dict(color=scenario_colors.get(scenario, "#636EFA"), width=2),
-            ))
-        fig_line.update_layout(
-            template="plotly_white",
-            title="Scenario Projections",
-            xaxis_title="Date",
-            yaxis_title="Value",
-            hovermode="x unified",
-        )
-        st.plotly_chart(fig_line, use_container_width=True)
+        st.line_chart(scenario_df)
         st.caption("📈 Each line represents the average trajectory for each scenario over 12 months.")
 
         fig = plotting.fan_chart(scenario_df)
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("📈 **Scenario Forecast**: Each colored line represents a different scenario's projected trajectory. Blue (Conservative) shows cautious growth, light blue (Baseline) shows steady performance, green (Optimistic) shows strong improvement, and orange (Aggressive) shows rapid change.")
+        st.caption("📊 **Uncertainty Bands**: This view shows the same scenarios with thicker bands to represent the uncertainty and range in possible outcomes. Wider gaps between scenarios = greater divergence in outcomes.")
     except Exception as e:
         st.error(f"Error generating scenario data: {e}")
 
@@ -253,7 +230,7 @@ def main() -> None:
     """)
     st.sidebar.markdown("---")
     
-    deliverable = st.sidebar.radio(
+    deliverable = st.radio(
         "Select Deliverable",
         list(DELIVERABLES.keys()),
     )

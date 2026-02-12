@@ -14,10 +14,6 @@ SCENARIO_COLORS = {
     "baseline": "#636EFA",
     "pessimistic": "#FFA15A",
     "worst_case": "#EF553B",
-    "scenario 1": "#636EFA",
-    "scenario 2": "#0099FF",
-    "scenario 3": "#00CC96",
-    "scenario 4": "#FF6B35",
 }
 
 
@@ -46,7 +42,7 @@ def save_figure(fig: go.Figure, path: str, width: int = 1000, height: int = 500)
 
 
 def fan_chart(df) -> go.Figure:
-    """Create a line chart showing scenario paths with uncertainty bands."""
+    """Create an area chart showing scenario paths with filled uncertainty bands."""
     import pandas as pd
     
     fig = go.Figure()
@@ -61,7 +57,8 @@ def fan_chart(df) -> go.Figure:
                 y=df[scenario],
                 mode="lines",
                 name=scenario,
-                line=dict(color=color, width=2),
+                line=dict(color=color, width=4),
+                opacity=0.7,
             ))
     
-    return apply_portfolio_style(fig, "Scenario Forecast")
+    return apply_portfolio_style(fig, "Scenario Forecast - Uncertainty Bands")
