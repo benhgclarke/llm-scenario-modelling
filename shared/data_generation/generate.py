@@ -82,26 +82,25 @@ def save_data(df: pd.DataFrame, output_dir: str) -> str:
 
 
 def generate_scenarios(n_paths: int = 200, n_months: int = 12, n_scenarios: int = 4) -> pd.DataFrame:
-    """Generate scenario data for Monte Carlo simulation."""
+    """Generate scenario data for Monte Carlo simulation (pivoted for easy charting)."""
     rng = np.random.default_rng(42)
     dates = pd.date_range(end=pd.Timestamp.now().normalize(), periods=n_months, freq="MS")
     
-    data = []
+    # Create aggregated scenario data (average across paths)
+    data = {}
     for scenario in range(n_scenarios):
-        for path in range(n_paths):
-            base_value = 1000 + scenario * 100
-            for i, date in enumerate(dates):
-                trend = i * 5
-                noise = rng.normal(0, 50)
-                value = base_value + trend + noise
-                data.append({
-                    "date": date,
-                    "scenario": f"Scenario {scenario + 1}",
-                    "path": path,
-                    "value": round(value, 2)
-                })
+        base_value = 1000 + scenario * 100
+        values = []
+        for i in range(n_months):
+            trend = i * 5
+            noise = rng.normal(0, 50)
+            value = base_value + trend + noise
+            values.append(round(value, 2))
+        data[f"Scenario {scenario + 1}"] = values
     
-    return pd.DataFrame(data)
+    df = pd.DataFrame(data, index=dates)
+    df.index.name = "date"
+    return df
 
 
 def generate_dashboard_data() -> pd.DataFrame:
