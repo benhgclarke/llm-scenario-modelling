@@ -317,6 +317,73 @@ def show_strategic_dashboard() -> None:
         st.plotly_chart(fig, use_container_width=True)
         st.caption("Monthly revenue and operating costs with profit overlay. Bars show revenue and cost; green line shows profit trend.")
         
+        # ===== ALTERNATIVE VIEW 1: WATERFALL CHART =====
+        st.subheader("Alternative View 1: Waterfall Chart")
+        latest_month = financial_df.iloc[-1]
+        fig_waterfall = go.Figure(go.Waterfall(
+            x=["Revenue", "Operating Cost", "Profit"],
+            y=[latest_month["Revenue"], -latest_month["Operating Cost"], latest_month["Profit"]],
+            measure=["relative", "relative", "total"],
+            connector={"line": {"color": "gray"}},
+            increasing={"marker": {"color": "#7fa8c9"}},
+            decreasing={"marker": {"color": "#d4903a"}},
+            totals={"marker": {"color": "#ff0000"}}
+        ))
+        fig_waterfall.update_layout(
+            title="Current Month: Revenue to Profit Waterfall",
+            xaxis_title="",
+            yaxis_title="Amount (£)",
+            height=400
+        )
+        st.plotly_chart(fig_waterfall, use_container_width=True)
+        st.caption("Shows how operating costs reduce revenue to arrive at profit for the current month.")
+        
+        # ===== ALTERNATIVE VIEW 4: COMBINATION CHART (Lines + Area) =====
+        st.subheader("Alternative View 4: Combination Chart")
+        fig_combo = go.Figure()
+        
+        # Add Revenue line
+        fig_combo.add_trace(go.Scatter(
+            x=financial_df["Month"],
+            y=financial_df["Revenue"],
+            name="Revenue",
+            mode="lines",
+            line=dict(color="#1f77b4", width=2),
+            connectgaps=True
+        ))
+        
+        # Add Operating Cost line
+        fig_combo.add_trace(go.Scatter(
+            x=financial_df["Month"],
+            y=financial_df["Operating Cost"],
+            name="Operating Cost",
+            mode="lines",
+            line=dict(color="#cc5500", width=2),
+            connectgaps=True
+        ))
+        
+        # Add Profit as filled area
+        fig_combo.add_trace(go.Scatter(
+            x=financial_df["Month"],
+            y=financial_df["Profit"],
+            name="Profit",
+            mode="lines",
+            line=dict(color="#ff0000", width=3),
+            fill="tozeroy",
+            fillcolor="rgba(255, 0, 0, 0.2)",
+            connectgaps=True
+        ))
+        
+        fig_combo.update_layout(
+            title="Revenue, Cost & Profit Trend (Lines with Profit Fill)",
+            xaxis_title="Month",
+            yaxis_title="Amount (£)",
+            hovermode="x unified",
+            height=400
+        )
+        st.plotly_chart(fig_combo, use_container_width=True)
+        st.caption("Line chart showing all three metrics with profit highlighted as a filled area.")
+        
         # Revenue breakdown tree map
         current_revenue = financial_df["Revenue"].iloc[-1]  # Latest month revenue
         
