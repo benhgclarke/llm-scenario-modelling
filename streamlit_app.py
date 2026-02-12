@@ -273,11 +273,16 @@ def show_strategic_dashboard() -> None:
             x="facility", 
             y="value", 
             color="value",
-            color_continuous_scale=[[0, "#4A90E2"], [1, "#003D99"]],
+            color_continuous_scale="Blues",
             title="Revenue Contribution by Plant",
             labels={"value": "Revenue (£)", "facility": "Location"},
         )
-        fig.update_layout(showlegend=False, hovermode="x unified")
+        fig.update_layout(
+            showlegend=False, 
+            hovermode="x unified",
+            coloraxis_colorbar=dict(title="Revenue (£)")
+        )
+        fig.update_traces(marker=dict(line=dict(width=0)))
         st.plotly_chart(fig, use_container_width=True)
         
         st.caption("Compare revenue across all plants. Darker blue indicates higher performers. Use this to spot trends and identify which facilities are leading and which need operational support.")
