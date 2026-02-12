@@ -245,16 +245,16 @@ def show_strategic_dashboard() -> None:
         recommendations = []
         
         if cost > 35000:
-            recommendations.append("**Cost Optimisation:** Operating costs are elevated. Consider reviewing procurement processes or renegotiating supplier contracts to reduce expenses.")
+            recommendations.append(f"**Cost Optimisation:** Operating costs are elevated at £{cost:,.0f} (threshold: £35,000). Consider reviewing procurement processes or renegotiating supplier contracts to reduce expenses.")
         
         if revenue < 35000:
-            recommendations.append("**Revenue Growth:** Total revenue is below target. Explore new market opportunities or consider expanding product/service offerings to increase revenue streams.")
+            recommendations.append(f"**Revenue Growth:** Total revenue is below target at £{revenue:,.0f} (threshold: £35,000). Explore new market opportunities or consider expanding product/service offerings to increase revenue streams.")
         
         if risk_score >= 3:
-            recommendations.append("**Risk Mitigation:** Operational risk is moderate to high. Implement additional quality control measures and review critical process dependencies.")
+            recommendations.append(f"**Risk Mitigation:** Operational risk is moderate to high at {risk_score:.1f}/5 (threshold: 3.0). Implement additional quality control measures and review critical process dependencies.")
         
         if not recommendations:
-            recommendations.append("**Operations Status:** Current metrics are healthy. Focus on maintaining performance and exploring growth opportunities.")
+            recommendations.append(f"**Operations Status:** Current metrics are healthy. Revenue: £{revenue:,.0f}, Operating Cost: £{cost:,.0f}, Risk Score: {risk_score:.1f}/5. Focus on maintaining performance and exploring growth opportunities.")
         
         for rec in recommendations:
             st.info(rec)
