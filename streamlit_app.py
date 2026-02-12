@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from shared import data_generator, processing, plotting, llm_client
+from shared import generate, processing, plotting, llm_client
 
 # -----------------------
 # Page configuration
