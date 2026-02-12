@@ -128,13 +128,13 @@ def show_insight_extraction() -> None:
     st.markdown("""
     ### What This Does
     
-    Once you have the data, the next question is: **What does it mean?** This section automatically analyzes your operational 
+    Once you have the data, the next question is: **What does it mean?** This section automatically analyses your operational 
     performance and highlights what's working well and what needs attention.
     
-    **How It Analyzes Your Data:**
+    **How It Analyses Your Data:**
     - **Performance Heatmap**: See at a glance which facilities and departments are performing best and worst
     - **Radar Chart**: Compare your facility's performance across key operational areas
-    - **Trend Analysis**: Understand if performance is improving, declining, or staying stable
+    - **Trend Analysis**: Understand if performance is improving, declining or staying stable
     - **Anomaly Detection**: Get alerted to unusual spikes or drops that might indicate problems
     - **Correlations**: Discover which metrics move together (e.g., does equipment uptime affect production?)
     
@@ -200,8 +200,8 @@ def show_strategic_dashboard() -> None:
         st.subheader("Key Performance Indicators")
         kpi_values = processing.generate_kpis()
         col1, col2, col3 = st.columns(3)
-        col1.metric("Revenue", f"${kpi_values['revenue']:,}")
-        col2.metric("Cost", f"${kpi_values['cost']:,}")
+        col1.metric("Revenue", f"£{kpi_values['revenue']:,}")
+        col2.metric("Cost", f"£{kpi_values['cost']:,}")
         col3.metric("Risk Score", f"{kpi_values['risk_score']:.2f}")
         st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health.")
 
@@ -218,7 +218,7 @@ def show_strategic_dashboard() -> None:
 
         st.markdown("---")
         st.markdown("### AI-Powered Insights Panel")
-        st.markdown("Ask Claude AI to analyze the data above and generate strategic recommendations.")
+        st.markdown("Ask Claude AI to analyse the data above and generate strategic recommendations.")
         if st.button("Get AI Insights"):
             with st.spinner("Generating insights..."):
                 insights = llm_client.get_insights(df_dashboard)
