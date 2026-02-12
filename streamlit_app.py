@@ -174,10 +174,26 @@ def show_strategic_dashboard() -> None:
 
     st.markdown("""
     ### What This Does
-    This is a real-time **executive dashboard** showing the most critical KPIs at a glance. 
-    It combines financial metrics, operational health, and risk indicators to give leadership 
-    a comprehensive view of business performance. All data is interactive and can be used to 
-    drill down into specific areas.
+    
+    **The Challenge:** As a leader, you need to make quick decisions based on current business performance. But wading through 
+    spreadsheets and reports takes too long. You need the critical numbers **right now**, in one place.
+    
+    **The Solution:** This dashboard brings together everything you need to know about your business performance in one view. 
+    Think of it as your business's "health monitor" - like a dashboard in a car showing speed, fuel, engine temp all at once.
+    
+    **What You'll See:**
+    
+    1. **Financial Metrics**: Revenue and cost performance - the bottom line results
+    2. **Operational Metrics**: Facility-by-facility breakdown showing which plants are performing well
+    3. **Risk Indicators**: Early warning signs that something needs attention
+    
+    **How to Use It:**
+    - **Quick Health Check**: Glance at the KPIs to see if everything is normal
+    - **Spot Trends**: Compare performance across facilities to identify leaders and laggards
+    - **Deep Dive**: Get AI-powered insights that explain what's driving the numbers
+    
+    **Why This Matters:** Instead of waiting for monthly reports, you get real-time visibility into business performance. 
+    This lets you respond quickly to problems and capitalize on opportunities.
     """)
 
     try:
