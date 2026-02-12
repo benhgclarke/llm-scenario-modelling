@@ -193,30 +193,80 @@ def show_strategic_dashboard() -> None:
     - **Deep Dive**: Get AI-powered insights that explain what's driving the numbers
     
     **Why This Matters:** Instead of waiting for monthly reports, you get real-time visibility into business performance. 
-    This lets you respond quickly to problems and capitalize on opportunities.
+    This lets you respond quickly to problems and capitalise on opportunities.
     """)
 
     try:
-        st.subheader("Key Performance Indicators")
         kpi_values = processing.generate_kpis()
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Revenue", f"£{kpi_values['revenue']:,}")
-        col2.metric("Cost", f"£{kpi_values['cost']:,}")
+        revenue = kpi_values['revenue']
+        cost = kpi_values['cost']
         risk_score = kpi_values['risk_score']
-        max_risk_score = 5  # Change if your scale is different
-        col3.metric("Risk Score", f"{risk_score:.2f}/{max_risk_score}")
-        st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health (out of 5).")
+        max_risk_score = 5
+        
+        # Determine status colours based on thresholds
+        revenue_status = "🟢 Healthy" if revenue > 40000 else "🟡 Caution" if revenue > 30000 else "🔴 Critical"
+        cost_status = "🟢 Healthy" if cost < 30000 else "🟡 Caution" if cost < 40000 else "🔴 Critical"
+        risk_status = "🟢 Low" if risk_score < 2 else "🟡 Medium" if risk_score < 3.5 else "🔴 High"
+        
+        # Overall system health
+        overall_health_color = "green" if (revenue > 40000 and cost < 30000 and risk_score < 2) else "orange" if (revenue > 30000 and cost < 40000 and risk_score < 3.5) else "red"
+        
+        st.markdown("---")
+        st.markdown("## 📊 System Health Status")
+        
+        health_col1, health_col2 = st.columns([2, 1])
+        with health_col1:
+            health_text = "✓ All Systems Operating Normally" if overall_health_color == "green" else "⚠ Attention Required" if overall_health_color == "orange" else "✗ Critical Issues"
+            st.markdown(f"### {health_text}")
+        
+        st.markdown("---")
+        st.markdown("## 💰 Financial Performance")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(
+                "Revenue",
+                f"£{revenue:,.0f}",
+                delta=f"{revenue_status}",
+                delta_color="off",
+            )
+        with col2:
+            st.metric(
+                "Operating Cost",
+                f"£{cost:,.0f}",
+                delta=f"{cost_status}",
+                delta_color="off",
+            )
+        
+        st.markdown("---")
+        st.markdown("## ⚠️ Risk Assessment")
+        
+        col3 = st.columns(1)[0]
+        with col3:
+            st.metric(
+                "Operational Risk Score",
+                f"{risk_score:.1f} / {max_risk_score}",
+                delta=f"{risk_status}",
+                delta_color="off",
+            )
 
-        st.subheader("Facility Comparison")
+        st.markdown("---")
+        st.markdown("## 🏭 Facility Performance")
+        
         df_dashboard = generate.generate_dashboard_data()
         fig = px.bar(
-            df_dashboard, x="facility", y="value", color="value",
+            df_dashboard, 
+            x="facility", 
+            y="value", 
+            color="value",
             color_continuous_scale=[[0, "#4A90E2"], [1, "#003D99"]],
-            title="Revenue by Facility"
+            title="Revenue by Facility",
+            labels={"value": "Revenue (£)", "facility": "Location"},
         )
-        fig.update_layout(coloraxis_colorbar=dict(title="Value"))
+        fig.update_layout(showlegend=False, hovermode="x unified")
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("🏭 This bar chart compares revenue performance across your three plants. Darker blue = higher revenue generation.")
+        
+        st.caption("🏭 This shows which plants contribute most to overall revenue. Use this to identify top performers and areas needing support.")
     except Exception as e:
         st.error(f"Error generating dashboard: {e}")
 
