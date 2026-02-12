@@ -14,6 +14,10 @@ SCENARIO_COLORS = {
     "baseline": "#636EFA",
     "pessimistic": "#FFA15A",
     "worst_case": "#EF553B",
+    "scenario 1": "#636EFA",
+    "scenario 2": "#0099FF",
+    "scenario 3": "#00CC96",
+    "scenario 4": "#FF6B35",
 }
 
 

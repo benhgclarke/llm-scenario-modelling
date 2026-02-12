@@ -79,7 +79,7 @@ def show_scenario_modeling() -> None:
 
         fig = plotting.fan_chart(scenario_df)
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("🎯 The fan chart shows how different scenarios diverge over time, with upper vs lower bounds representing uncertainty.")
+        st.caption("📈 **Scenario Forecast**: Each colored line represents a different scenario's projected trajectory. Blue (Conservative) shows cautious growth, light blue (Baseline) shows steady performance, green (Optimistic) shows strong improvement, and orange (Aggressive) shows rapid change.")
     except Exception as e:
         st.error(f"Error generating scenario data: {e}")
 
