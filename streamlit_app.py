@@ -277,8 +277,8 @@ def show_strategic_dashboard() -> None:
             x=financial_df["Month"],
             y=financial_df["Revenue"],
             name="Revenue",
-            marker_color="#1f77b4",
-            opacity=0.7
+            marker_color="#7fa8c9",
+            opacity=0.5
         ))
         
         # Add Operating Cost bars
@@ -286,8 +286,8 @@ def show_strategic_dashboard() -> None:
             x=financial_df["Month"],
             y=financial_df["Operating Cost"],
             name="Operating Cost",
-            marker_color="#cc5500",
-            opacity=0.7
+            marker_color="#d4903a",
+            opacity=0.5
         ))
         
         # Add Profit line on secondary y-axis
@@ -295,10 +295,10 @@ def show_strategic_dashboard() -> None:
             x=financial_df["Month"],
             y=financial_df["Profit"],
             name="Profit",
-            line=dict(color="#00d960", width=3),
+            line=dict(color="#ff0000", width=4),
             yaxis="y2",
             mode="lines+markers",
-            marker=dict(size=6)
+            marker=dict(size=8, color="#ff0000")
         ))
         
         fig.update_layout(
