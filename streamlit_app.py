@@ -317,6 +317,36 @@ def show_strategic_dashboard() -> None:
         st.plotly_chart(fig, use_container_width=True)
         st.caption("Monthly revenue and operating costs with profit overlay. Bars show revenue and cost; green line shows profit trend.")
         
+        # Revenue breakdown tree map
+        current_revenue = financial_df["Revenue"].iloc[-1]  # Latest month revenue
+        
+        # Create revenue breakdown by segment
+        segments = {
+            "Product A": current_revenue * 0.35,
+            "Product B": current_revenue * 0.28,
+            "Product C": current_revenue * 0.22,
+            "Services": current_revenue * 0.15
+        }
+        
+        tree_df = pd.DataFrame([
+            {"Segment": name, "Revenue": value}
+            for name, value in segments.items()
+        ])
+        
+        st.subheader("Current Revenue Distribution")
+        fig_tree = px.treemap(
+            tree_df,
+            labels="Segment",
+            values="Revenue",
+            title="Revenue by Business Segment",
+            color="Revenue",
+            color_continuous_scale="Blues",
+            hover_data={"Revenue": ":.0f"}
+        )
+        fig_tree.data[0].hovertemplate = "<b>%{label}</b><br>Revenue: £%{value:,.0f}<extra></extra>"
+        st.plotly_chart(fig_tree, use_container_width=True)
+        st.caption("Current month revenue distribution across business segments.")
+        
         st.markdown("---")
         st.markdown("## ⚠️ Risk Assessment")
         
