@@ -91,7 +91,30 @@ def show_scenario_modeling() -> None:
             n_scenarios=SIMULATOR_CONFIG["n_scenarios"],
         )
         st.subheader("Scenario Projections")
-        st.line_chart(scenario_df)
+        
+        # Create fixed, non-zoomable chart
+        fig = go.Figure()
+        scenario_colors = {
+            "Scenario 1": "#1f77b4",
+            "Scenario 2": "#ff7f0e",
+            "Scenario 3": "#2ca02c",
+            "Scenario 4": "#d62728",
+        }
+        for scenario in scenario_df.columns:
+            fig.add_trace(go.Scatter(
+                x=scenario_df.index,
+                y=scenario_df[scenario],
+                mode="lines",
+                name=scenario,
+                line=dict(color=scenario_colors.get(scenario, "#636EFA"), width=2),
+            ))
+        fig.update_layout(
+            template="plotly_white",
+            xaxis=dict(fixedrange=True),
+            yaxis=dict(fixedrange=True),
+            hovermode="x unified",
+        )
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
         st.caption("📈 Each line represents the average trajectory for each scenario over 12 months.")
     except Exception as e:
         st.error(f"Error generating scenario data: {e}")
