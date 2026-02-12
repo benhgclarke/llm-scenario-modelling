@@ -306,6 +306,9 @@ def show_strategic_dashboard() -> None:
             title="Revenue, Cost & Profit Trend",
             xaxis_title="Month",
             yaxis_title="Amount (£)",
+            yaxis=dict(
+                ticktemplate="£%{value/1000:.1f}K"
+            ),
             hovermode="x unified",
             height=500
         )
