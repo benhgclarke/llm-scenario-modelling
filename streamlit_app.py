@@ -272,18 +272,6 @@ def show_strategic_dashboard() -> None:
         
         df_dashboard = generate.generate_dashboard_data()
         
-        # Identify leaders and laggards
-        if not df_dashboard.empty:
-            best_facility = df_dashboard.loc[df_dashboard['value'].idxmax()]
-            worst_facility = df_dashboard.loc[df_dashboard['value'].idxmin()]
-            
-            # Show leaders and laggards
-            insight_col1, insight_col2 = st.columns(2)
-            with insight_col1:
-                st.success(f"🏆 **Top Performer:** {best_facility['facility']} (£{best_facility['value']:,.0f})")
-            with insight_col2:
-                st.warning(f"⚠️ **Needs Support:** {worst_facility['facility']} (£{worst_facility['value']:,.0f})")
-        
         # Create facility revenue donut chart
         fig = px.pie(
             df_dashboard,
