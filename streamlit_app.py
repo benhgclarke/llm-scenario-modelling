@@ -54,16 +54,33 @@ def show_scenario_modeling() -> None:
     st.title("Deliverable 1: Scenario Modeling")
     st.markdown(DELIVERABLES["Deliverable 1"]["description"])
 
+    st.markdown("""
+    ### What This Does
+    This section uses **Monte Carlo simulation** to project key performance indicators (KPIs) 
+    into the future under different business scenarios. Instead of making a single prediction, 
+    we run 200 simulated paths for each scenario to capture uncertainty and show a range of 
+    possible outcomes.
+
+    **Scenarios modeled:**
+    - **Scenario 1 (Conservative)**: Assumes slower improvement
+    - **Scenario 2 (Baseline)**: Assumes steady-state operations
+    - **Scenario 3 (Optimistic)**: Assumes operational improvements
+    - **Scenario 4 (Aggressive)**: Assumes significant changes
+    """)
+
     try:
         scenario_df = generate.generate_scenarios(
             n_paths=SIMULATOR_CONFIG["n_paths"],
             n_months=SIMULATOR_CONFIG["n_months"],
             n_scenarios=SIMULATOR_CONFIG["n_scenarios"],
         )
+        st.subheader("Scenario Projections")
         st.line_chart(scenario_df)
+        st.caption("📈 Each line represents the average trajectory for each scenario over 12 months.")
 
         fig = plotting.fan_chart(scenario_df)
         st.plotly_chart(fig, use_container_width=True)
+        st.caption("🎯 The fan chart shows how different scenarios diverge over time, with upper vs lower bounds representing uncertainty.")
     except Exception as e:
         st.error(f"Error generating scenario data: {e}")
 
@@ -73,7 +90,22 @@ def show_insight_extraction() -> None:
     st.title("Deliverable 2: Insight Extraction")
     st.markdown(DELIVERABLES["Deliverable 2"]["description"])
 
+    st.markdown("""
+    ### What This Does
+    This section analyzes operational data across multiple dimensions to surface key insights. 
+    We examine 10 different KPIs across 3 manufacturing plants using 6 different analysis approaches:
+
+    **6 Analysis Types:**
+    1. **Trends**: How are KPIs moving over time?
+    2. **Anomalies**: Are there unusual spikes or dips?
+    3. **Correlations**: Which KPIs move together?
+    4. **Facility Comparison**: Which plant performs best?
+    5. **Risk Analysis**: Where are the biggest operational risks?
+    6. **Executive Summary**: AI-generated insights in plain English
+    """)
+
     try:
+        st.subheading("Performance Heatmap")
         heatmap_data = processing.generate_heatmap_data()
         fig = px.imshow(
             heatmap_data,
@@ -82,12 +114,15 @@ def show_insight_extraction() -> None:
             color_continuous_scale="Viridis",
         )
         st.plotly_chart(fig, use_container_width=True)
+        st.caption("🔥 Heatmap shows performance scores (0-100) across facilities and key metrics. Darker = better performance.")
 
+        st.subheading("Performance Radar Chart")
         radar_data = processing.generate_radar_data()
         fig = px.line_polar(
             radar_data, r="value", theta="metric", line_close=True
         )
         st.plotly_chart(fig, use_container_width=True)
+        st.caption("📊 Radar chart compares your facility across 5 operational dimensions. Larger area = better overall performance.")
     except Exception as e:
         st.error(f"Error generating insight data: {e}")
 
@@ -97,13 +132,24 @@ def show_strategic_dashboard() -> None:
     st.title("Deliverable 3: Strategic Dashboard")
     st.markdown(DELIVERABLES["Deliverable 3"]["description"])
 
+    st.markdown("""
+    ### What This Does
+    This is a real-time **executive dashboard** showing the most critical KPIs at a glance. 
+    It combines financial metrics, operational health, and risk indicators to give leadership 
+    a comprehensive view of business performance. All data is interactive and can be used to 
+    drill down into specific areas.
+    """)
+
     try:
+        st.subheading("Key Performance Indicators")
         kpi_values = processing.generate_kpis()
         col1, col2, col3 = st.columns(3)
         col1.metric("Revenue", f"${kpi_values['revenue']:,}")
         col2.metric("Cost", f"${kpi_values['cost']:,}")
         col3.metric("Risk Score", f"{kpi_values['risk_score']:.2f}")
+        st.caption("💰 These are your top 3 strategic metrics. Revenue and Cost drive profitability; Risk Score indicates operational health.")
 
+        st.subheading("Facility Comparison")
         df_dashboard = generate.generate_dashboard_data()
         fig = px.bar(
             df_dashboard, x="facility", y="value", color="value",
@@ -112,9 +158,11 @@ def show_strategic_dashboard() -> None:
         )
         fig.update_layout(coloraxis_colorbar=dict(title="Value"))
         st.plotly_chart(fig, use_container_width=True)
+        st.caption("🏭 This bar chart compares revenue performance across your three plants. Darker blue = higher revenue generation.")
 
         st.markdown("---")
-        st.markdown("### AI Insights Panel")
+        st.markdown("### AI-Powered Insights Panel")
+        st.markdown("Ask Claude AI to analyze the data above and generate strategic recommendations.")
         if st.button("Get AI Insights"):
             with st.spinner("Generating insights..."):
                 insights = llm_client.get_insights(df_dashboard)
@@ -137,6 +185,18 @@ def show_documentation() -> None:
     """Display Documentation deliverable."""
     st.title("Deliverable 4: Documentation")
     st.markdown(DELIVERABLES["Deliverable 4"]["description"])
+
+    st.markdown("""
+    ### What This Is
+    Complete documentation covering the entire system, including:
+    - **System Architecture**: How all components work together
+    - **AI Integration Guide**: How Claude API powers the insights
+    - **Quick Start Guide**: Getting up and running in 5 minutes
+    - **Presentation Guide**: How to present this project to stakeholders
+    - **Extension Guide**: How to build on top of this system
+
+    This section provides everything needed to understand, maintain, and scale the system.
+    """)
 
     try:
         doc_file = Path(DOCUMENTATION_PATH)
@@ -163,6 +223,13 @@ DELIVERABLE_VIEWS = {
 
 def main() -> None:
     """Main app entry point."""
+    st.sidebar.markdown("# 📊 LLM Scenario Modelling")
+    st.sidebar.markdown("""
+    An AI-augmented analytics system for manufacturing operations. 
+    Combines statistical analysis, Monte Carlo simulation, and Claude API insights.
+    """)
+    st.sidebar.markdown("---")
+    
     deliverable = st.radio(
         "Select Deliverable",
         list(DELIVERABLES.keys()),
