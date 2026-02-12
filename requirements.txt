@@ -4,3 +4,6 @@ pandas
 numpy
 jupyter
 scikit-learn
+python-dotenv
+pyyaml
+anthropic
