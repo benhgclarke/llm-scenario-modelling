@@ -217,24 +217,6 @@ def show_strategic_dashboard() -> None:
         fig.update_layout(coloraxis_colorbar=dict(title="Value"))
         st.plotly_chart(fig, use_container_width=True)
         st.caption("🏭 This bar chart compares revenue performance across your three plants. Darker blue = higher revenue generation.")
-
-        st.markdown("---")
-        st.markdown("### AI-Powered Insights Panel")
-        st.markdown("Ask Claude AI to analyse the data above and generate strategic recommendations.")
-        if st.button("Get AI Insights"):
-            with st.spinner("Generating insights..."):
-                insights = llm_client.get_insights(df_dashboard)
-                if "Unable to generate insights" in insights:
-                    st.warning(
-                        "🔑 **API Key Required**\n\n"
-                        "To enable AI insights, add your Anthropic API key:\n\n"
-                        "1. Copy `.env.example` to `.env`\n"
-                        "2. Add your `ANTHROPIC_API_KEY`\n"
-                        "3. Restart the app"
-                    )
-                else:
-                    st.success("Insights Generated")
-                    st.write(insights)
     except Exception as e:
         st.error(f"Error generating dashboard: {e}")
 
@@ -272,25 +254,22 @@ def show_documentation() -> None:
 # Router
 # -----------------------
 DELIVERABLE_VIEWS = {
-    "Deliverable 1": show_scenario_modeling,
-    "Deliverable 2": show_insight_extraction,
-    "Deliverable 3": show_strategic_dashboard,
-    "Deliverable 4": show_documentation,
+    "Scenario Modeling": show_scenario_modeling,
+    "Insight Extraction": show_insight_extraction,
+    "Strategic Dashboard": show_strategic_dashboard,
+    "Documentation": show_documentation,
 }
 
 
 def main() -> None:
     """Main app entry point."""
     st.sidebar.markdown("# 📊 LLM Scenario Modelling")
-    st.sidebar.markdown("""
-    An AI-augmented analytics system for manufacturing operations. 
-    Combines statistical analysis, Monte Carlo simulation, and Claude API insights.
-    """)
+    st.sidebar.markdown("""Turn your operations data into smart business decisions. Explore multiple future scenarios and get AI-powered recommendations to drive better results.""")
     st.sidebar.markdown("---")
     
     deliverable = st.sidebar.radio(
-        "Select Deliverable",
-        list(DELIVERABLES.keys()),
+        "Select Section",
+        list(DELIVERABLE_VIEWS.keys()),
     )
 
     DELIVERABLE_VIEWS[deliverable]()
