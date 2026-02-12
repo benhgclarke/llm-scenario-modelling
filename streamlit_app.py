@@ -74,7 +74,31 @@ def show_scenario_modeling() -> None:
             n_scenarios=SIMULATOR_CONFIG["n_scenarios"],
         )
         st.subheader("Scenario Projections")
-        st.line_chart(scenario_df)
+        
+        # Create a colored line chart using plotly with consistent colors
+        fig_line = go.Figure()
+        scenario_colors = {
+            "Scenario 1": "#636EFA",
+            "Scenario 2": "#0099FF",
+            "Scenario 3": "#00CC96",
+            "Scenario 4": "#FF6B35",
+        }
+        for scenario in scenario_df.columns:
+            fig_line.add_trace(go.Scatter(
+                x=scenario_df.index,
+                y=scenario_df[scenario],
+                mode="lines",
+                name=scenario,
+                line=dict(color=scenario_colors.get(scenario, "#636EFA"), width=2),
+            ))
+        fig_line.update_layout(
+            template="plotly_white",
+            title="Scenario Projections",
+            xaxis_title="Date",
+            yaxis_title="Value",
+            hovermode="x unified",
+        )
+        st.plotly_chart(fig_line, use_container_width=True)
         st.caption("📈 Each line represents the average trajectory for each scenario over 12 months.")
 
         fig = plotting.fan_chart(scenario_df)
