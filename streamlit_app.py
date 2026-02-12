@@ -52,7 +52,6 @@ st.set_page_config(**PAGE_CONFIG)
 def show_scenario_modeling() -> None:
     """Display Scenario Modeling deliverable."""
     st.title("Deliverable 1: Scenario Modeling")
-    st.markdown(DELIVERABLES["Deliverable 1"]["description"])
 
     st.markdown("""
     ### What This Does
