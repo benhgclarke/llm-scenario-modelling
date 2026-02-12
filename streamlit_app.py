@@ -252,25 +252,70 @@ def show_strategic_dashboard() -> None:
         noise = rng.normal(0, 2000, 24)
         historical_costs = base_cost + (seasonal_pattern * 5000) + cost_trend + noise
         
-        cost_df = pd.DataFrame({
+        # Generate historical revenue data (higher than costs with similar patterns)
+        base_revenue = 85000
+        revenue_seasonal = np.array([1.02, 1.01, 0.98, 0.97, 0.95, 0.94, 0.95, 0.97, 1.00, 1.02, 1.03, 1.05] * 2)
+        revenue_trend = np.linspace(0, 5000, 24)
+        revenue_noise = rng.normal(0, 3000, 24)
+        historical_revenue = base_revenue + (revenue_seasonal * 8000) + revenue_trend + revenue_noise
+        
+        # Calculate profit
+        historical_profit = historical_revenue - historical_costs
+        
+        financial_df = pd.DataFrame({
             "Month": months,
+            "Revenue": historical_revenue,
             "Operating Cost": historical_costs,
-            "Year": months.year
+            "Profit": historical_profit
         })
         
-        st.subheader("Operating Costs - Year-over-Year Trend")
-        fig = px.line(
-            cost_df,
-            x="Month",
-            y="Operating Cost",
-            color="Year",
-            title="24-Month Operating Cost Trend",
-            labels={"Operating Cost": "Cost (£)", "Month": "Date"},
-            markers="circle"
+        st.subheader("24-Month Financial Overview")
+        fig = go.Figure()
+        
+        # Add Revenue bars
+        fig.add_trace(go.Bar(
+            x=financial_df["Month"],
+            y=financial_df["Revenue"],
+            name="Revenue",
+            marker_color="#1f77b4",
+            opacity=0.7
+        ))
+        
+        # Add Operating Cost bars
+        fig.add_trace(go.Bar(
+            x=financial_df["Month"],
+            y=financial_df["Operating Cost"],
+            name="Operating Cost",
+            marker_color="#ff7f0e",
+            opacity=0.7
+        ))
+        
+        # Add Profit line on secondary y-axis
+        fig.add_trace(go.Scatter(
+            x=financial_df["Month"],
+            y=financial_df["Profit"],
+            name="Profit",
+            line=dict(color="#2ca02c", width=3),
+            yaxis="y2",
+            mode="lines+markers",
+            marker=dict(size=6)
+        ))
+        
+        fig.update_layout(
+            title="Revenue, Operating Cost & Profit Trend",
+            xaxis_title="Month",
+            yaxis_title="Amount (£)",
+            yaxis2=dict(
+                title="Profit (£)",
+                overlaying="y",
+                side="right"
+            ),
+            hovermode="x unified",
+            barmode="group",
+            height=500
         )
-        fig.update_layout(hovermode="x unified")
         st.plotly_chart(fig, use_container_width=True)
-        st.caption("Operating costs over the past 24 months, showing seasonal patterns and year-over-year comparison.")
+        st.caption("Monthly revenue and operating costs with profit overlay. Bars show revenue and cost; green line shows profit trend.")
         
         st.markdown("---")
         st.markdown("## ⚠️ Risk Assessment")
