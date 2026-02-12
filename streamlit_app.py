@@ -292,31 +292,25 @@ def show_strategic_dashboard() -> None:
             connectgaps=True
         ))
         
-        # Add Profit on secondary y-axis
+        # Add Profit on same y-axis (will naturally appear below as it's a smaller value)
         fig_combo.add_trace(go.Scatter(
             x=financial_df["Month"],
             y=financial_df["Profit"],
             name="Profit",
             mode="lines",
             line=dict(color="#ff0000", width=3),
-            yaxis="y2",
             connectgaps=True
         ))
         
         fig_combo.update_layout(
             title="Revenue, Cost & Profit Trend",
             xaxis_title="Month",
-            yaxis_title="Revenue & Cost (£)",
-            yaxis2=dict(
-                title="Profit (£)",
-                overlaying="y",
-                side="right"
-            ),
+            yaxis_title="Amount (£)",
             hovermode="x unified",
-            height=400
+            height=500
         )
         st.plotly_chart(fig_combo, use_container_width=True)
-        st.caption("Line chart showing revenue and cost on the left axis, with profit on the right axis for clear separation.")
+        st.caption("Line chart showing revenue, operating cost, and profit. Profit appears below revenue and cost as it represents the difference.")
         
         # Revenue breakdown tree map
         current_revenue = financial_df["Revenue"].iloc[-1]  # Latest month revenue
