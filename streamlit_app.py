@@ -285,6 +285,7 @@ def show_strategic_dashboard() -> None:
             name="Revenue",
             mode="lines",
             line=dict(color="#0d47a1", width=2),
+            hovertemplate="<b>%{x|%b %Y}</b><br>Revenue: £%{y:.1f}K<extra></extra>",
             connectgaps=True
         ))
         
@@ -295,6 +296,7 @@ def show_strategic_dashboard() -> None:
             name="Operating Cost",
             mode="lines",
             line=dict(color="#ffb3b3", width=2),
+            hovertemplate="<b>%{x|%b %Y}</b><br>Operating Cost: £%{y:.1f}K<extra></extra>",
             connectgaps=True
         ))
         
@@ -305,6 +307,7 @@ def show_strategic_dashboard() -> None:
             name="Profit",
             mode="lines",
             line=dict(color="#00b050", width=3),
+            hovertemplate="<b>%{x|%b %Y}</b><br>Profit: £%{y:.1f}K<extra></extra>",
             connectgaps=True
         ))
         
@@ -342,6 +345,10 @@ def show_strategic_dashboard() -> None:
             marker=dict(colorscale="Blues"),
             textposition="middle center"
         ))
+        # Format treemap with currency hover labels
+        formatted_values = [f"£{val/1000:.1f}K" for val in segment_values]
+        fig_tree.data[0].customdata = formatted_values
+        fig_tree.data[0].hovertemplate = "<b>%{label}</b><br>Revenue: %{customdata}<extra></extra>"
         fig_tree.update_layout(
             title="Revenue by Business Segment",
             height=400
