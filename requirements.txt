@@ -2,5 +2,7 @@ streamlit
 plotly
 pandas
 numpy
-jupyter
-scikit-learn
+pyyaml
+python-dotenv
+anthropic>=0.39.0
+scipy
